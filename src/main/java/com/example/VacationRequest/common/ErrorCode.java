@@ -1,0 +1,13 @@
+package com.example.VacationRequest.common;
+
+public enum ErrorCode {
+    UNAUTHORIZED,
+    FORBIDDEN,
+    VALIDATION_FAILED,
+    USER_NOT_FOUND,
+    INVALID_CREDENTIALS,
+    CURRENT_PASSWORD_INCORRECT,
+    PASSWORD_TOO_SHORT,
+    TOKEN_INVALID,
+    INTERNAL_ERROR
+}
