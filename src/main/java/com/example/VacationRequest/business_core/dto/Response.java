@@ -22,4 +22,7 @@ public class Response {
 
     private Long managerId;
     private String managerEmail;
+
+    private Long vacationTypeId;
+    private String vacationTypeName;
 }

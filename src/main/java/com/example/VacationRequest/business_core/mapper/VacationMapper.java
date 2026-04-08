@@ -14,6 +14,7 @@ public interface VacationMapper {
     @Mapping(target = "status", ignore = true)
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
+    @Mapping(target = "vacationType", ignore = true)
     VacationRequest toEntity(CreateRequest dto);
 
     @Mapping(target = "status", expression = "java(entity.getStatus().name())")
@@ -21,5 +22,9 @@ public interface VacationMapper {
     @Mapping(target = "employeeEmail", source = "employee.email")
     @Mapping(target = "managerId", source = "manager.id")
     @Mapping(target = "managerEmail", source = "manager.email")
+    @Mapping(target = "vacationTypeName", source = "vacationType.name")
+    @Mapping(target = "vacationTypeId", source = "vacationType.id")
     Response toResponse(VacationRequest entity);
+
+
 }
