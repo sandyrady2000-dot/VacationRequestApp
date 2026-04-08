@@ -76,4 +76,7 @@ public class VacationRequest {
         APPROVED,
         REJECTED
     }
+    @ManyToOne
+    @JoinColumn(name = "vacation_type_id")
+    private VacationType vacationType;
 }
