@@ -25,6 +25,7 @@ public interface VacationMapper {
     @Mapping(target = "managerEmail", source = "manager.email")
     @Mapping(target = "vacationTypeName", source = "vacationType.name")
     @Mapping(target = "vacationTypeId", source = "vacationType.id")
+    @Mapping(target = "managerReason", source = "managerComment")
     Response toResponse(VacationRequest entity);
 
 

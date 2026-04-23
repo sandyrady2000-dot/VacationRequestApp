@@ -1,7 +1,9 @@
 package com.example.VacationRequest.business_core.service.impl;
 
 import com.example.VacationRequest.business_core.dto.Response;
+import com.example.VacationRequest.business_core.dto.VacationDecisionRequest;
 import com.example.VacationRequest.business_core.entity.VacationRequest;
+import com.example.VacationRequest.business_core.enums.VacationAction;
 import com.example.VacationRequest.business_core.enums.VacationStatus;
 import com.example.VacationRequest.business_core.mapper.VacationMapper;
 import com.example.VacationRequest.business_core.repository.VacationRequestRepository;
@@ -44,36 +46,24 @@ public class VacationManagerServiceImpl implements VacationManagerService {
     }
 
     @Override
-    public Response approve(Long requestId) {
+    public Response decide(Long id, VacationDecisionRequest request) {
         User manager = currentUser();
 
-        VacationRequest req = vacationRepo.findByIdAndManager_Id(requestId, manager.getId())
+        VacationRequest req = vacationRepo.findByIdAndManager_Id(id, manager.getId())
                 .orElseThrow(() -> new AccessDeniedException("Request not found or not yours"));
 
         if (req.getStatus() != VacationStatus.PENDING) {
             throw new IllegalStateException("Request already processed");
         }
 
-        req.setStatus(VacationStatus.APPROVED);
-        VacationRequest saved = vacationRepo.save(req);
-
-        return vacationMapper.toResponse(saved);
-    }
-
-    @Override
-    public Response reject(Long requestId) {
-        User manager = currentUser();
-
-        VacationRequest req = vacationRepo.findByIdAndManager_Id(requestId, manager.getId())
-                .orElseThrow(() -> new AccessDeniedException("Request not found or not yours"));
-
-        if (req.getStatus() != VacationStatus.PENDING) {
-            throw new IllegalStateException("Request already processed");
+        if (request.getAction() == VacationAction.APPROVE) {
+            req.setStatus(VacationStatus.APPROVED);
+        } else if (request.getAction() == VacationAction.REJECT) {
+            req.setStatus(VacationStatus.REJECTED);
         }
 
-        req.setStatus(VacationStatus.REJECTED);
-        VacationRequest saved = vacationRepo.save(req);
+        req.setManagerComment(request.getComment());
 
-        return vacationMapper.toResponse(saved);
+        return vacationMapper.toResponse(vacationRepo.save(req));
     }
 }

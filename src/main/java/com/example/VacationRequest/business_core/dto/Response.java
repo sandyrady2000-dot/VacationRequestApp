@@ -26,4 +26,5 @@ public class Response {
     private Long vacationTypeId;
     private String vacationTypeName;
     private boolean halfDay;
+    private String managerReason;
 }
