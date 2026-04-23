@@ -36,4 +36,6 @@ public interface VacationRequestRepository extends JpaRepository<VacationRequest
         order by vr.createdAt desc
     """)
     List<VacationRequestAdminView> findAllForAdmin();
+
+
 }
