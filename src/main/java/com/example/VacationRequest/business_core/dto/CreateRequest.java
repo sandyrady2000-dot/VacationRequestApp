@@ -10,4 +10,5 @@ public class CreateRequest {
     private LocalDate endDate;
     private String reason;
     private Long vacationTypeId;
+    private boolean halfDay;
 }

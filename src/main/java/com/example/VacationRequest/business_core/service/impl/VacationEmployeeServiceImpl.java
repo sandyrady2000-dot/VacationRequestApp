@@ -10,6 +10,7 @@ import com.example.VacationRequest.business_core.repository.VacationRequestRepos
 import com.example.VacationRequest.business_core.entity.ManagerAssignment;
 import com.example.VacationRequest.business_core.repository.VacationTypeRepository;
 import com.example.VacationRequest.business_core.service.VacationEmployeeService;
+import com.example.VacationRequest.usermgmt.dto.response.PersonalInfoResponse;
 import com.example.VacationRequest.usermgmt.entity.User;
 import com.example.VacationRequest.business_core.repository.ManagerAssignmentRepository;
 import com.example.VacationRequest.usermgmt.repository.UserRepository;
@@ -38,6 +39,7 @@ public class VacationEmployeeServiceImpl implements VacationEmployeeService {
     }
     @Override
     public Response createRequest(CreateRequest req) {
+        System.out.println("DTO halfDay = " + req.isHalfDay());
 
         if (req.getStartDate() == null || req.getEndDate() == null) {
             throw new IllegalArgumentException("startDate and endDate are required");
@@ -63,6 +65,9 @@ public class VacationEmployeeServiceImpl implements VacationEmployeeService {
         entity.setStatus(VacationStatus.PENDING);
         entity.setVacationType(vacationType);
 
+        boolean isHalfDay = req.isHalfDay();
+        entity.setHalfDay(isHalfDay);
+
         VacationRequest saved = vacationRepo.save(entity);
         return vacationMapper.toResponse(saved);
     }
@@ -76,5 +81,21 @@ public class VacationEmployeeServiceImpl implements VacationEmployeeService {
                 .map(vacationMapper::toResponse)
                 .toList();
     }
+    @Override
+    @Transactional(readOnly = true)
+    public PersonalInfoResponse getMyBalance() {
+        User employee = currentUser();
+
+        return new PersonalInfoResponse(
+                employee.getFullName(),
+                employee.getDepartment(),
+                employee.getSoyBal(),
+                employee.getConsumedDays(),
+                employee.getAbsentDays(),
+                employee.getRemainingBal()
+
+        );
+
+        }
 
 }

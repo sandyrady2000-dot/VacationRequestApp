@@ -3,6 +3,7 @@ package com.example.VacationRequest.usermgmt.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 
@@ -57,4 +58,18 @@ public class User {
         updatedAt = LocalDateTime.now();
     }
 
+    @Column(name = "soy_bal")
+    private BigDecimal soyBal;
+
+    @Column(name = "consumed_days")
+    private BigDecimal consumedDays;
+
+    @Column(name = "absent_days")
+    private BigDecimal absentDays;
+
+    @Column(name = "remaining_bal")
+    private BigDecimal remainingBal;
+
+    @Column(name = "department")
+    private String department;
 }

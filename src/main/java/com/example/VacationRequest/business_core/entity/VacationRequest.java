@@ -57,6 +57,9 @@ public class VacationRequest {
     @Column(name = "updated_at", nullable = false)
     private LocalDateTime updatedAt;
 
+    @Column(name = "half_day")
+    private boolean halfDay;
+
     @PrePersist
     public void prePersist() {
         this.createdAt = LocalDateTime.now();

@@ -15,6 +15,7 @@ public interface VacationMapper {
     @Mapping(target = "createdAt", ignore = true)
     @Mapping(target = "updatedAt", ignore = true)
     @Mapping(target = "vacationType", ignore = true)
+    @Mapping(target = "halfDay", source = "halfDay")
     VacationRequest toEntity(CreateRequest dto);
 
     @Mapping(target = "status", expression = "java(entity.getStatus().name())")
