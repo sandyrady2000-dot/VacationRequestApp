@@ -74,6 +74,7 @@ public class VacationRequest {
         this.updatedAt = LocalDateTime.now();
     }
 
+
     public enum Status {
         PENDING,
         APPROVED,
@@ -82,4 +83,7 @@ public class VacationRequest {
     @ManyToOne
     @JoinColumn(name = "vacation_type_id")
     private VacationType vacationType;
+
+    @Column(name = "manager_comments")
+    private String managerComment;
 }
